@@ -76,7 +76,7 @@ class _DictionariesScreenState extends State<DictionariesScreen> {
           onDictionaryPressed: (dictionary) {
             context.pushNamed(
               HomeRoute.terms,
-              queryParams: {HomeParams.dictionaryId: dictionary.id},
+              queryParams: {HomeParams.dictionaryId: dictionary.id.toString()},
             );
           },
         );

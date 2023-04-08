@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_base_flutter/ui/dimens.dart';
 import 'package:test_base_flutter/ui/kit/gap.dart';
 import 'package:test_base_flutter/ui/theme/app_text_theme.dart';
@@ -24,6 +23,7 @@ class TermListItem extends StatelessWidget {
         padding: const EdgeInsets.all(Dimens.md),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               name,
@@ -31,7 +31,7 @@ class TermListItem extends StatelessWidget {
             ),
             Gap.sm,
             Text(
-              name,
+              description,
               style: Theme.of(context).textTheme.p2,
             )
           ],

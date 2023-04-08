@@ -45,8 +45,8 @@ class LocalDictionaryRepository implements DictionaryRepository {
     for (int i = 0; i < termsJson.length; i += 2) {
       terms.add(
         Term(
-          name: termsJson['terms'][i],
-          description: termsJson['terms'][i + 1],
+          name: termsJson[i],
+          description: termsJson[i + 1],
         ),
       );
     }

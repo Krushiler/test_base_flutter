@@ -6,7 +6,8 @@ final rootNavigator = GlobalKey<NavigatorState>();
 
 GoRouter createAppRouter(String initialLocation) => GoRouter(
       initialLocation: initialLocation,
+      navigatorKey: rootNavigator,
       routes: [
-        homeRoute,
+        ...homeRoutes,
       ],
     );

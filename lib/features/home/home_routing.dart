@@ -18,39 +18,41 @@ class HomeParams {
   static const dictionaryId = 'dictionaryId';
 }
 
-final homeRoute = ShellRoute(
-    navigatorKey: _homeNavigator,
-    builder: (context, state, child) => HomeRootScreenProvider(
-          currentLocation: state.location,
-          child: child,
-        ),
-    routes: [
-      GoRoute(
-        path: HomeRoute.practice,
-        name: HomeRoute.practice,
-        parentNavigatorKey: _homeNavigator,
-        pageBuilder: (context, state) => const NoTransitionPage(
-          child: Scaffold(
-            body: Center(
-              child: Text('Practice'),
+final homeRoutes = [
+  ShellRoute(
+      navigatorKey: _homeNavigator,
+      builder: (context, state, child) => HomeRootScreenProvider(
+            currentLocation: state.location,
+            child: child,
+          ),
+      routes: [
+        GoRoute(
+          path: HomeRoute.practice,
+          name: HomeRoute.practice,
+          parentNavigatorKey: _homeNavigator,
+          pageBuilder: (context, state) => const NoTransitionPage(
+            child: Scaffold(
+              body: Center(
+                child: Text('Practice'),
+              ),
             ),
           ),
         ),
-      ),
-      GoRoute(
-        path: HomeRoute.dictionaries,
-        name: HomeRoute.dictionaries,
-        parentNavigatorKey: _homeNavigator,
-        pageBuilder: (context, state) => const NoTransitionPage(
-          child: DictionariesScreenProvider(),
+        GoRoute(
+          path: HomeRoute.dictionaries,
+          name: HomeRoute.dictionaries,
+          parentNavigatorKey: _homeNavigator,
+          pageBuilder: (context, state) => const NoTransitionPage(
+            child: DictionariesScreenProvider(),
+          ),
         ),
-      ),
-      GoRoute(
-        path: HomeRoute.terms,
-        name: HomeRoute.terms,
-        parentNavigatorKey: rootNavigator,
-        builder: (context, state) => TermsScreenProvider(
-          dictionaryId: state.getIntQueryParam(HomeParams.dictionaryId) ?? 0,
-        ),
-      ),
-    ]);
+      ]),
+  GoRoute(
+    path: HomeRoute.terms,
+    name: HomeRoute.terms,
+    parentNavigatorKey: rootNavigator,
+    builder: (context, state) => TermsScreenProvider(
+      dictionaryId: state.getIntQueryParam(HomeParams.dictionaryId) ?? 0,
+    ),
+  ),
+];
