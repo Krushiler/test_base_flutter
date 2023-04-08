@@ -1,0 +1,40 @@
+{
+  "dictionaries": [
+    {
+      "id": 0,
+      "file": "astronomy.json"
+    },
+    {
+      "id": 1,
+      "file": "biology.json"
+    },
+    {
+      "id": 2,
+      "file": "biology9.json"
+    },
+    {
+      "id": 3,
+      "file": "chemistry.json"
+    },
+    {
+      "id": 4,
+      "file": "geography_stol.json"
+    },
+    {
+      "id": 5,
+      "file": "informatics.json"
+    },
+    {
+      "id": 6,
+      "file": "maths.json"
+    },
+    {
+      "id": 7,
+      "file": "physics.json"
+    },
+    {
+      "id": 8,
+      "file": "physics.json"
+    }
+  ]
+}
