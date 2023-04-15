@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:test_base_flutter/ui/kit/icons.dart';
 import 'package:test_base_flutter/ui/kit/svg_button.dart';
 
 class NavigationBackButton extends StatelessWidget {
@@ -11,7 +12,7 @@ class NavigationBackButton extends StatelessWidget {
       onPressed: () {
         context.pop();
       },
-      asset: 'assets/icons/arrow_back.svg',
+      icon: TestBaseIcons.arrowBack,
     );
   }
 }

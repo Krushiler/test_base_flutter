@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_base_flutter/ui/dimens.dart';
+import 'package:test_base_flutter/ui/kit/icons.dart';
 import 'package:test_base_flutter/ui/theme/app_text_theme.dart';
 
 class DictionaryListItem extends StatelessWidget {
@@ -23,7 +23,7 @@ class DictionaryListItem extends StatelessWidget {
               style: Theme.of(context).textTheme.p2,
             ),
             const Spacer(),
-            SvgPicture.asset('assets/icons/arrow_list_choose.svg')
+            TestBaseIcons.arrowListChoose,
           ],
         ),
       ),

@@ -15,6 +15,7 @@ class ScreenConsumer<Bloc extends StateStreamableSource<State>, State>
   final BlocBuilderCondition<State>? buildWhen;
 
   final ProgressBuilder<State>? showProgress;
+  final bool hideScreenOnProgress;
 
   final PreferredSizeWidget? appBar;
   final Widget? drawer;
@@ -34,6 +35,7 @@ class ScreenConsumer<Bloc extends StateStreamableSource<State>, State>
     this.buildWhen,
     this.listener,
     this.listenWhen,
+    this.hideScreenOnProgress = true,
     super.key,
   });
 
@@ -52,16 +54,18 @@ class ScreenConsumer<Bloc extends StateStreamableSource<State>, State>
             body: SafeArea(
               child: Stack(
                 children: [
-                  ScrollConfiguration(
-                    behavior: NoGlowScrollBehavior(),
-                    child: Padding(
-                      padding: padding,
-                      child: builder.call(context, state),
+                  if (!(showProgress?.call(state) ?? false) ||
+                      !hideScreenOnProgress)
+                    ScrollConfiguration(
+                      behavior: NoGlowScrollBehavior(),
+                      child: Padding(
+                        padding: padding,
+                        child: builder.call(context, state),
+                      ),
                     ),
-                  ),
                   if (showProgress?.call(state) ?? false)
-                    Column(
-                      children: const [Spacer(), LinearProgressIndicator()],
+                    const Center(
+                      child: CircularProgressIndicator(),
                     ),
                 ],
               ),

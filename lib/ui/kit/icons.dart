@@ -13,4 +13,12 @@ class TestBaseIcons {
         width: Dimens.lg,
         height: Dimens.lg,
       );
+
+  static get arrowBack => SvgPicture.asset(
+        'assets/icons/arrow_back.svg',
+      );
+
+  static get arrowListChoose => SvgPicture.asset(
+        'assets/icons/arrow_list_choose.svg',
+      );
 }

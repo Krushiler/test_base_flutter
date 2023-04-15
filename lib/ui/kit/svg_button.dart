@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_base_flutter/ui/dimens.dart';
 
 class SvgButton extends StatelessWidget {
-  final String asset;
+  final Widget icon;
   final VoidCallback? onPressed;
 
   const SvgButton({
     Key? key,
-    required this.asset,
+    required this.icon,
     this.onPressed,
   }) : super(key: key);
 
@@ -19,7 +18,7 @@ class SvgButton extends StatelessWidget {
       padding: EdgeInsets.zero,
       splashRadius: Dimens.md,
       onPressed: onPressed,
-      icon: SvgPicture.asset(asset),
+      icon: icon,
     );
   }
 }
