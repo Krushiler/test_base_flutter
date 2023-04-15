@@ -5,8 +5,9 @@ abstract class TermsState {}
 class LoadedTermsState extends TermsState {
   final List<Term> terms;
   final bool refresh;
+  final String dictionaryName;
 
-  LoadedTermsState(this.terms, {this.refresh = false});
+  LoadedTermsState(this.terms, this.dictionaryName, {this.refresh = false});
 }
 
 class ProgressTermsState extends TermsState {

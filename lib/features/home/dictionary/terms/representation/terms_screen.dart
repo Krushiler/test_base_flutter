@@ -51,6 +51,7 @@ class _TermsScreenState extends State<TermsScreen> {
   final RefreshController refreshController = RefreshController();
 
   final List<Term> terms = [];
+  String dictionaryName = '';
   bool inProgress = true;
 
   @override
@@ -64,6 +65,7 @@ class _TermsScreenState extends State<TermsScreen> {
               terms.clear();
             }
             terms.addAll(state.terms);
+            dictionaryName = state.dictionaryName;
           });
         }
         if (state is ProgressTermsState) {
@@ -80,7 +82,7 @@ class _TermsScreenState extends State<TermsScreen> {
       },
       appBar: TestBaseAppBar(
         leading: const NavigationBackButton(),
-        title: 'Terms',
+        title: dictionaryName,
         actions: [
           SvgButton(
             icon: TestBaseIcons.search,

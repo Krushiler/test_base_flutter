@@ -17,7 +17,7 @@ class TermsBloc extends Bloc<TermsEvent, TermsState> {
 
       emit.call(termsResult.fold(
         (l) => FailureTermsState(l.message),
-        (r) => LoadedTermsState(r.terms, refresh: event.refresh),
+        (r) => LoadedTermsState(r.terms, r.dictionaryName, refresh: event.refresh),
       ));
       emit.call(ProgressTermsState(false));
     });
