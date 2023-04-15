@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_base_flutter/ui/kit/gap.dart';
+import 'package:test_base_flutter/ui/theme/app_text_theme.dart';
 
 class ResultPage extends StatelessWidget {
   final int mistakes;
@@ -14,26 +15,36 @@ class ResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text('Mistakes: $mistakes'),
-            Gap.xxl,
-            Text('${time.toStringAsPrecision(2)} seconds'),
-            const Spacer(),
-            OutlinedButton(
-              onPressed: () {
-                context.pop();
-              },
-              child: const Text('Back'),
-            )
-          ],
-        ),
-      ],
+    return Center(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Mistakes: $mistakes', style: Theme.of(context).textTheme.h3?.bold,),
+              Gap.xxl,
+              Text('${time.toStringAsPrecision(2)} seconds', style: Theme.of(context).textTheme.h3?.bold),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              SizedBox(
+                width: 160,
+                child: OutlinedButton(
+                  onPressed: () {
+                    context.pop();
+                  },
+                  child: const Text('Back'),
+                ),
+              ),
+              Gap.xxl,
+            ],
+          )
+        ],
+      ),
     );
   }
 }

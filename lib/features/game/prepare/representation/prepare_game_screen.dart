@@ -8,6 +8,7 @@ import 'package:test_base_flutter/features/game/prepare/bloc/prepare_game_state.
 import 'package:test_base_flutter/features/home/home_routing.dart';
 import 'package:test_base_flutter/ui/components/screen.dart';
 import 'package:test_base_flutter/ui/kit/gap.dart';
+import 'package:test_base_flutter/ui/theme/app_text_theme.dart';
 import 'package:test_base_flutter/util/snackbar_util.dart';
 
 class PrepareGameScreenProvider extends StatelessWidget {
@@ -36,6 +37,7 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
   bool inProgress = true;
   List<Dictionary> dictionaries = [];
   Dictionary? selectedDictionary;
+  final countController = TextEditingController(text: 10.toString());
 
   @override
   Widget build(BuildContext context) {
@@ -55,48 +57,76 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
         });
       },
       builder: (context, state) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                DropdownButton<Dictionary>(
-                    value: selectedDictionary,
-                    items: dictionaries
-                        .map(
-                          (e) => DropdownMenuItem<Dictionary>(
-                            value: e,
-                            child: Text(e.name),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (dictionary) {
-                      setState(() {
-                        selectedDictionary = dictionary;
-                      });
-                    }),
-                Gap.xxl,
-                Gap.xxl,
-                ElevatedButton(
-                  onPressed: selectedDictionary != null
-                      ? () {
-                          context.pushNamed(
-                            HomeRoute.practiceGame,
-                            queryParams: {
-                              HomeParams.questionsCount: 10.toString(),
-                              HomeParams.dictionaryId:
-                                  selectedDictionary!.id.toString(),
-                            },
-                          );
-                        }
-                      : null,
-                  child: const Text('Start'),
-                ),
-              ],
-            ),
-          ],
+        return Center(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Dictionary:', style: Theme.of(context).textTheme.h3?.bold,),
+                  Gap.md,
+                  DropdownButton<Dictionary>(
+                      value: selectedDictionary,
+                      items: dictionaries
+                          .map(
+                            (e) => DropdownMenuItem<Dictionary>(
+                              value: e,
+                              child: Text(e.name),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (dictionary) {
+                        setState(() {
+                          selectedDictionary = dictionary;
+                        });
+                      }),
+                  Gap.xxl,
+                  Text('Questions count:', style: Theme.of(context).textTheme.h3?.bold,),
+                  Gap.md,
+                  SizedBox(
+                    width: 120,
+                    child: TextFormField(
+                      controller: countController,
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      onChanged: (_) {
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 240,
+                    child: ElevatedButton(
+                      onPressed: selectedDictionary != null &&
+                          int.tryParse(countController.text) != null &&
+                          int.parse(countController.text) <= 30
+                          ? () {
+                        context.pushNamed(
+                          HomeRoute.practiceGame,
+                          queryParams: {
+                            HomeParams.questionsCount: countController.text,
+                            HomeParams.dictionaryId:
+                            selectedDictionary!.id.toString(),
+                          },
+                        );
+                      }
+                          : null,
+                      child: const Text('Start'),
+                    ),
+                  ),
+                  Gap.xxl,
+                ],
+              )
+            ],
+          ),
         );
       },
       showProgress: (state) => inProgress,

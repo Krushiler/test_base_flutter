@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:test_base_flutter/data/dto/dictionary/dictionary_list_dto.dart';
 import 'package:test_base_flutter/data/dto/dictionary/terms_dto.dart';
+import 'package:test_base_flutter/data/dto/dictionary/terms_search_dto.dart';
 import 'package:test_base_flutter/data/dto/json.dart';
 import 'package:test_base_flutter/data/model/_exception/user_exception.dart';
 import 'package:test_base_flutter/data/model/dictionary/dictionary.dart';
@@ -57,6 +58,49 @@ class LocalDictionaryRepository implements DictionaryRepository {
         terms,
       ),
     );
+  }
+
+  @override
+  Future<Either<UserException, TermsSearchDto>> searchTerms(
+      int dictionaryId, String query) async {
+    final termsResult = await getTerms(dictionaryId);
+    final List<Term> terms = [];
+
+    termsResult.fold(
+      (l) {
+        return l;
+      },
+      (r) {
+        for (final element in r.terms) {
+          if (element.name
+              .trim()
+              .toLowerCase()
+              .startsWith(query.trim().toLowerCase())) {
+            terms.add(element);
+          }
+        }
+        for (final element in r.terms) {
+          if (element.name
+                  .trim()
+                  .toLowerCase()
+                  .contains(query.trim().toLowerCase()) &&
+              !terms.contains(element)) {
+            terms.add(element);
+          }
+        }
+        for (final element in r.terms) {
+          if (element.description
+                  .trim()
+                  .toLowerCase()
+                  .contains(query.trim().toLowerCase()) &&
+              !terms.contains(element)) {
+            terms.add(element);
+          }
+        }
+      },
+    );
+
+    return Right(TermsSearchDto(terms));
   }
 
   Future<Json> _jsonFromAssets(String fileName) async {

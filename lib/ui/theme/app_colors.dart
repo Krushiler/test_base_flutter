@@ -4,6 +4,7 @@ class AppColors {
   static const defaultForeground = Color(0xFF161A1F);
   static const defaultBackground = Color(0xFFFFFFFF);
   static const brandPrimary = Color(0xFFD64320);
+  static const brandPrimaryContainer = Color(0xFFfae4de);
 
   static const gray = MaterialColor(
     0xFF101317,

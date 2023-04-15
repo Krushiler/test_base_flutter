@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test_base_flutter/ui/theme/app_colors.dart';
 import 'package:test_base_flutter/ui/theme/app_text_theme.dart';
 
 class LabelButton extends StatelessWidget {
@@ -16,7 +15,7 @@ class LabelButton extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(context).textTheme.buttonMedium?.copyWith(
-              color: AppColors.brandPrimary,
+              color: Theme.of(context).primaryColor,
               leadingDistribution: TextLeadingDistribution.even,
             ),
       ),

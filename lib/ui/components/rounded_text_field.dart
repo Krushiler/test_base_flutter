@@ -71,15 +71,15 @@ class RoundedTextField extends StatelessWidget {
         ),
         focusedBorder: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(Dimens.sm),
-          borderSide: const BorderSide(
-            color: AppColors.brandPrimary,
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
             width: Dimens.xs,
           ),
         ),
         focusedErrorBorder: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(Dimens.sm),
-          borderSide: const BorderSide(
-            color: AppColors.brandPrimary,
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
             width: Dimens.xs,
           ),
         ),

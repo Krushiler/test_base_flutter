@@ -21,4 +21,16 @@ class TestBaseIcons {
   static get arrowListChoose => SvgPicture.asset(
         'assets/icons/arrow_list_choose.svg',
       );
+
+  static get clear => SvgPicture.asset(
+    'assets/icons/clear.svg',
+    width: Dimens.lg,
+    height: Dimens.lg,
+  );
+
+  static get search => SvgPicture.asset(
+    'assets/icons/search.svg',
+    width: Dimens.lg,
+    height: Dimens.lg,
+  );
 }

@@ -11,6 +11,7 @@ final appTheme = ThemeData(
     primary: AppColors.brandPrimary,
     secondary: AppColors.brandPrimary,
     background: AppColors.defaultBackground,
+    primaryContainer: AppColors.brandPrimaryContainer,
   ),
   appBarTheme: AppBarTheme(
       toolbarHeight: Dimens.xxl,

@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:test_base_flutter/data/model/dictionary/term.dart';
 import 'package:test_base_flutter/features/home/dictionary/terms/bloc/terms_bloc.dart';
 import 'package:test_base_flutter/features/home/dictionary/terms/bloc/terms_event.dart';
 import 'package:test_base_flutter/features/home/dictionary/terms/bloc/terms_state.dart';
 import 'package:test_base_flutter/features/home/dictionary/terms/representation/components/term_list.dart';
+import 'package:test_base_flutter/features/home/home_routing.dart';
 import 'package:test_base_flutter/ui/components/buttons/navigation_back_button.dart';
 import 'package:test_base_flutter/ui/components/screen.dart';
+import 'package:test_base_flutter/ui/kit/icons.dart';
+import 'package:test_base_flutter/ui/kit/svg_button.dart';
 import 'package:test_base_flutter/ui/kit/test_base_app_bar.dart';
 import 'package:test_base_flutter/util/snackbar_util.dart';
 
@@ -74,9 +78,19 @@ class _TermsScreenState extends State<TermsScreen> {
           context.showSnackBar(state.message);
         }
       },
-      appBar: const TestBaseAppBar(
-        leading: NavigationBackButton(),
+      appBar: TestBaseAppBar(
+        leading: const NavigationBackButton(),
         title: 'Terms',
+        actions: [
+          SvgButton(
+            icon: TestBaseIcons.search,
+            onPressed: () {
+              context.pushNamed(HomeRoute.termsSearch, queryParams: {
+                HomeParams.dictionaryId: widget.dictionaryId.toString(),
+              });
+            },
+          )
+        ],
       ),
       builder: (context, state) {
         return TermList(
