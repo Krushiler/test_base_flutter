@@ -23,9 +23,7 @@ class QuestionPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: Dimens.xxl),
       child: Column(
         children: [
-          const Expanded(flex: 1, child: SizedBox()),
           Expanded(
-            flex: 1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -50,7 +48,6 @@ class QuestionPage extends StatelessWidget {
           ),
           Gap.xxl,
           Expanded(
-            flex: 1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -69,7 +66,6 @@ class QuestionPage extends StatelessWidget {
               ],
             ),
           ),
-          const Expanded(flex: 1, child: SizedBox()),
         ],
       ),
     );
