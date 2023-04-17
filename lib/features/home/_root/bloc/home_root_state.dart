@@ -1,3 +1,5 @@
+import 'package:test_base_flutter/data/model/dictionary/tag.dart';
+
 abstract class HomeRootState {}
 
 class ProgressHomeRootState extends HomeRootState {
@@ -7,7 +9,22 @@ class ProgressHomeRootState extends HomeRootState {
 }
 
 class LoadedHomeRootState extends HomeRootState {
-  LoadedHomeRootState();
+  final List<Tag> tags;
+  final Tag selectedTag;
+
+  LoadedHomeRootState(this.tags, this.selectedTag);
+}
+
+class NewTagSelectedHomeRootState extends HomeRootState {
+  final Tag selectedTag;
+
+  NewTagSelectedHomeRootState(this.selectedTag);
+}
+
+class EnabledTagEditHomeRootState extends HomeRootState {
+  final bool enabled;
+
+  EnabledTagEditHomeRootState(this.enabled);
 }
 
 class FailureHomeRootState extends HomeRootState {

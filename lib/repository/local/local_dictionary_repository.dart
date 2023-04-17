@@ -8,19 +8,28 @@ import 'package:test_base_flutter/data/dto/dictionary/terms_search_dto.dart';
 import 'package:test_base_flutter/data/dto/json.dart';
 import 'package:test_base_flutter/data/model/_exception/user_exception.dart';
 import 'package:test_base_flutter/data/model/dictionary/dictionary.dart';
+import 'package:test_base_flutter/data/model/dictionary/tag.dart';
 import 'package:test_base_flutter/data/model/dictionary/term.dart';
 import 'package:test_base_flutter/repository/interfaces/dictonary_repository.dart';
 
 class LocalDictionaryRepository implements DictionaryRepository {
   @override
-  Future<Either<UserException, DictionaryListDto>> getDictionaries() async {
+  Future<Either<UserException, DictionaryListDto>> getDictionaries(
+      String tag) async {
     final List<_DictionaryInfo> dicts;
     try {
       dicts = await _getAvailableDictionaries();
     } catch (e) {
       return Left(UserException('Unable to get available dictionaries'));
     }
-    final list = dicts.map((e) => Dictionary(id: e.id, name: e.name)).toList();
+    final list = dicts
+        .map((e) => Dictionary(
+              id: e.id,
+              name: e.name,
+              tag: e.tag,
+            ))
+        .where((element) => element.tag == tag)
+        .toList();
     return Right(DictionaryListDto(list));
   }
 
@@ -66,11 +75,11 @@ class LocalDictionaryRepository implements DictionaryRepository {
     final termsResult = await getTerms(dictionaryId);
     final List<Term> terms = [];
 
-    termsResult.fold(
-      (l) {
-        return l;
+    return termsResult.fold(
+      (l) async {
+        return Left(l);
       },
-      (r) {
+      (r) async {
         for (final element in r.terms) {
           if (element.name
               .trim()
@@ -97,11 +106,14 @@ class LocalDictionaryRepository implements DictionaryRepository {
             terms.add(element);
           }
         }
+        return Right(TermsSearchDto(terms));
       },
     );
-
-    return Right(TermsSearchDto(terms));
   }
+
+  @override
+  Future<Either<UserException, List<Tag>>> getTags() async =>
+      Right([Tag('EN', 'en'), Tag('RU', 'ru')]);
 
   Future<Json> _jsonFromAssets(String fileName) async {
     return jsonDecode(await rootBundle.loadString(fileName));
@@ -118,10 +130,10 @@ class LocalDictionaryRepository implements DictionaryRepository {
         );
         result.add(
           _DictionaryInfo(
-            id: dict['id'],
-            name: dictJson['name'],
-            json: dict['file'],
-          ),
+              id: dict['id'],
+              name: dictJson['name'],
+              json: dict['file'],
+              tag: dict['tag']),
         );
       } on FormatException catch (_) {}
     }
@@ -132,11 +144,13 @@ class LocalDictionaryRepository implements DictionaryRepository {
 class _DictionaryInfo {
   final int id;
   final String name;
+  final String tag;
   final String json;
 
   _DictionaryInfo({
     required this.id,
     required this.name,
+    required this.tag,
     required this.json,
   });
 }

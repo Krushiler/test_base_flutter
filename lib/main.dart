@@ -26,7 +26,7 @@ class App extends StatelessWidget {
     return LocalRepositoryProvider(
       child: MaterialApp.router(
         routerConfig: createAppRouter(initialRoute),
-        title: 'BossIt',
+        title: 'TestBase',
         theme: appTheme,
         themeMode: ThemeMode.light,
         debugShowCheckedModeBanner: false,

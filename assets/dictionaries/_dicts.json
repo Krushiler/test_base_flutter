@@ -2,35 +2,43 @@
   "dictionaries": [
     {
       "id": 0,
-      "file": "astronomy.json"
+      "file": "astronomy.json",
+      "tag": "en"
     },
     {
       "id": 1,
-      "file": "biology.json"
+      "file": "biology.json",
+      "tag": "ru"
     },
     {
       "id": 2,
-      "file": "biology9.json"
+      "file": "biology9.json",
+      "tag": "ru"
     },
     {
       "id": 3,
-      "file": "chemistry.json"
+      "file": "chemistry.json",
+      "tag": "en"
     },
     {
       "id": 4,
-      "file": "geography_stol.json"
+      "file": "geography_stol.json",
+      "tag": "en"
     },
     {
       "id": 5,
-      "file": "informatics.json"
+      "file": "informatics.json",
+      "tag": "ru"
     },
     {
       "id": 6,
-      "file": "maths.json"
+      "file": "maths.json",
+      "tag": "en"
     },
     {
       "id": 7,
-      "file": "physics.json"
+      "file": "physics.json",
+      "tag": "en"
     }
   ]
 }

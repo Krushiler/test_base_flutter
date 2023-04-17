@@ -9,6 +9,10 @@ class RootGameBloc extends Bloc<RootGameEvent, RootGameState> {
   final DictionaryRepository dictionaryRepository;
   final GameRepository gameRepository;
 
+  listenGame(event) {
+    add(GameStateChangedRootGameEvent(event));
+  }
+
   RootGameBloc(
     this.dictionaryRepository,
     this.gameRepository,
@@ -43,8 +47,6 @@ class RootGameBloc extends Bloc<RootGameEvent, RootGameState> {
       gameRepository.giveAnswer(event.term);
     });
 
-    gameRepository.gameState.listen((event) {
-      add(GameStateChangedRootGameEvent(event));
-    });
+    gameRepository.gameState.listen(listenGame);
   }
 }

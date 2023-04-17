@@ -82,7 +82,7 @@ class _TermsScreenState extends State<TermsScreen> {
       },
       appBar: TestBaseAppBar(
         leading: const NavigationBackButton(),
-        title: dictionaryName,
+        title: Text(dictionaryName),
         actions: [
           SvgButton(
             icon: TestBaseIcons.search,

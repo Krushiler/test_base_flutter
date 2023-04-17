@@ -3,21 +3,18 @@ import 'package:test_base_flutter/ui/dimens.dart';
 
 class TestBaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
-  final String? title;
-  final Widget? titleWidget;
+  final Widget? title;
   final Widget? leading;
 
   const TestBaseAppBar({
     Key? key,
     this.actions,
     this.title,
-    this.titleWidget,
     this.leading,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final newTitleWidget = titleWidget ?? (title != null ? Text(title!) : null);
     final List<Widget>? paddedActions = actions
         ?.map(
           (e) => Center(
@@ -31,7 +28,7 @@ class TestBaseAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       actions: paddedActions,
-      title: newTitleWidget,
+      title: title,
       leading: leading,
     );
   }

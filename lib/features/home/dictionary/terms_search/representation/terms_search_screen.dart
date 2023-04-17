@@ -75,10 +75,11 @@ class _TermsSearchScreenState extends State<TermsSearchScreen> {
       },
       appBar: TestBaseAppBar(
         leading: const NavigationBackButton(),
-        titleWidget: Padding(
+        title: Padding(
           padding: const EdgeInsets.only(right: Dimens.md),
           child: TextField(
             controller: searchController,
+            autofocus: true,
             textAlignVertical: TextAlignVertical.top,
             decoration: InputDecoration(
               hintText: 'search...',
