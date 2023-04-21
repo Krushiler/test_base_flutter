@@ -58,73 +58,63 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
       },
       builder: (context, state) {
         return Center(
-          child: Stack(
-            alignment: Alignment.center,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Dictionary:', style: Theme.of(context).textTheme.h3?.bold,),
-                  Gap.md,
-                  DropdownButton<Dictionary>(
-                      value: selectedDictionary,
-                      items: dictionaries
-                          .map(
-                            (e) => DropdownMenuItem<Dictionary>(
-                              value: e,
-                              child: Text(e.name),
-                            ),
-                          )
-                          .toList(),
-                      onChanged: (dictionary) {
-                        setState(() {
-                          selectedDictionary = dictionary;
-                        });
-                      }),
-                  Gap.xxl,
-                  Text('Questions count:', style: Theme.of(context).textTheme.h3?.bold,),
-                  Gap.md,
-                  SizedBox(
-                    width: 120,
-                    child: TextFormField(
-                      controller: countController,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      onChanged: (_) {
-                        setState(() {});
-                      },
-                    ),
-                  ),
-                ],
+              const Spacer(),
+              Text('Dictionary:', style: Theme.of(context).textTheme.h3?.bold,),
+              Gap.md,
+              DropdownButton<Dictionary>(
+                  value: selectedDictionary,
+                  items: dictionaries
+                      .map(
+                        (e) => DropdownMenuItem<Dictionary>(
+                          value: e,
+                          child: Text(e.name),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (dictionary) {
+                    setState(() {
+                      selectedDictionary = dictionary;
+                    });
+                  }),
+              Gap.xxl,
+              Text('Questions count:', style: Theme.of(context).textTheme.h3?.bold,),
+              Gap.md,
+              SizedBox(
+                width: 120,
+                child: TextFormField(
+                  controller: countController,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  onChanged: (_) {
+                    setState(() {});
+                  },
+                ),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 240,
-                    child: ElevatedButton(
-                      onPressed: selectedDictionary != null &&
-                          int.tryParse(countController.text) != null &&
-                          int.parse(countController.text) <= 30
-                          ? () {
-                        context.pushNamed(
-                          HomeRoute.practiceGame,
-                          queryParams: {
-                            HomeParams.questionsCount: countController.text,
-                            HomeParams.dictionaryId:
-                            selectedDictionary!.id.toString(),
-                          },
-                        );
-                      }
-                          : null,
-                      child: const Text('Start'),
-                    ),
-                  ),
-                  Gap.xxl,
-                ],
-              )
+              const Spacer(),
+              SizedBox(
+                width: 240,
+                child: ElevatedButton(
+                  onPressed: selectedDictionary != null &&
+                      int.tryParse(countController.text) != null &&
+                      int.parse(countController.text) <= 30
+                      ? () {
+                    context.pushNamed(
+                      HomeRoute.practiceGame,
+                      queryParams: {
+                        HomeParams.questionsCount: countController.text,
+                        HomeParams.dictionaryId:
+                        selectedDictionary!.id.toString(),
+                      },
+                    );
+                  }
+                      : null,
+                  child: const Text('Start'),
+                ),
+              ),
+              const Spacer(),
             ],
           ),
         );
