@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_base_flutter/features/game/_root/representation/root_game_screen.dart';
+import 'package:test_base_flutter/features/game/dictionary_select/representation/dictionary_select_screen.dart';
 import 'package:test_base_flutter/features/game/prepare/representation/prepare_game_screen.dart';
 import 'package:test_base_flutter/features/home/_root/representation/home_root_screen.dart';
 import 'package:test_base_flutter/features/home/dictionary/list/representation/dictionaries_screen.dart';
@@ -17,6 +18,7 @@ final _homeNavigator = GlobalKey<NavigatorState>();
 class HomeRoute {
   static const practice = '/practice';
   static const practiceGame = '/practice-game';
+  static const dictionarySelect = '/dictionary-select';
   static const dictionaries = '/dictionaries';
   static const terms = '/terms';
   static const termsSearch = '/terms-search';
@@ -67,6 +69,12 @@ final homeRoutes = [
     builder: (context, state) => TermsSearchScreenProvider(
       dictionaryId: state.getIntQueryParam(HomeParams.dictionaryId) ?? 0,
     ),
+  ),
+  GoRoute(
+    path: HomeRoute.dictionarySelect,
+    name: HomeRoute.dictionarySelect,
+    parentNavigatorKey: rootNavigator,
+    builder: (context, state) => const DictionarySelectScreenProvider(),
   ),
   GoRoute(
     path: HomeRoute.practiceGame,

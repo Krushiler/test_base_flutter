@@ -27,6 +27,7 @@ class LocalDictionaryRepository implements DictionaryRepository {
               id: e.id,
               name: e.name,
               tag: e.tag,
+              termsCount: 30
             ))
         .where((element) => element.tag == tag)
         .toList();

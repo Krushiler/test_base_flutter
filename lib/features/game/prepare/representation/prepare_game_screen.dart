@@ -8,6 +8,7 @@ import 'package:test_base_flutter/features/game/prepare/bloc/prepare_game_state.
 import 'package:test_base_flutter/features/home/home_routing.dart';
 import 'package:test_base_flutter/ui/components/screen.dart';
 import 'package:test_base_flutter/ui/kit/gap.dart';
+import 'package:test_base_flutter/ui/navigation/router.dart';
 import 'package:test_base_flutter/ui/theme/app_text_theme.dart';
 import 'package:test_base_flutter/util/snackbar_util.dart';
 
@@ -62,25 +63,28 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Spacer(),
-              Text('Dictionary:', style: Theme.of(context).textTheme.h3?.bold,),
+              Text(
+                'Dictionary:',
+                style: Theme.of(context).textTheme.h3?.bold,
+              ),
               Gap.md,
-              DropdownButton<Dictionary>(
-                  value: selectedDictionary,
-                  items: dictionaries
-                      .map(
-                        (e) => DropdownMenuItem<Dictionary>(
-                          value: e,
-                          child: Text(e.name),
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (dictionary) {
-                    setState(() {
-                      selectedDictionary = dictionary;
-                    });
-                  }),
+              if (selectedDictionary != null)
+                OutlinedButton(
+                  onPressed: () async {
+                    final result = await context.pushNamed(HomeRoute.dictionarySelect);
+                    if (result != null && result is Dictionary) {
+                      setState(() {
+                        selectedDictionary = result;
+                      });
+                    }
+                  },
+                  child: Text(selectedDictionary!.name),
+                ),
               Gap.xxl,
-              Text('Questions count:', style: Theme.of(context).textTheme.h3?.bold,),
+              Text(
+                'Questions count:',
+                style: Theme.of(context).textTheme.h3?.bold,
+              ),
               Gap.md,
               SizedBox(
                 width: 120,
@@ -98,18 +102,20 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
                 width: 240,
                 child: ElevatedButton(
                   onPressed: selectedDictionary != null &&
-                      int.tryParse(countController.text) != null &&
-                      int.parse(countController.text) <= 30
+                          int.tryParse(countController.text) != null &&
+                          int.parse(countController.text) <=
+                              selectedDictionary!.termsCount &&
+                          int.parse(countController.text) > 0
                       ? () {
-                    context.pushNamed(
-                      HomeRoute.practiceGame,
-                      queryParams: {
-                        HomeParams.questionsCount: countController.text,
-                        HomeParams.dictionaryId:
-                        selectedDictionary!.id.toString(),
-                      },
-                    );
-                  }
+                          context.pushNamed(
+                            HomeRoute.practiceGame,
+                            queryParams: {
+                              HomeParams.questionsCount: countController.text,
+                              HomeParams.dictionaryId:
+                                  selectedDictionary!.id.toString(),
+                            },
+                          );
+                        }
                       : null,
                   child: const Text('Start'),
                 ),
