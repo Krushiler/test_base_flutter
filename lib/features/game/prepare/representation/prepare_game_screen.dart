@@ -8,7 +8,6 @@ import 'package:test_base_flutter/features/game/prepare/bloc/prepare_game_state.
 import 'package:test_base_flutter/features/home/home_routing.dart';
 import 'package:test_base_flutter/ui/components/screen.dart';
 import 'package:test_base_flutter/ui/kit/gap.dart';
-import 'package:test_base_flutter/ui/navigation/router.dart';
 import 'package:test_base_flutter/ui/theme/app_text_theme.dart';
 import 'package:test_base_flutter/util/snackbar_util.dart';
 
