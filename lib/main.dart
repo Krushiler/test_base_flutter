@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test_base_flutter/features/home/home_routing.dart';
-import 'package:test_base_flutter/repository/local/local_repository_provider.dart';
+import 'package:test_base_flutter/repository/remote/remote_repository_provider.dart';
 import 'package:test_base_flutter/ui/navigation/router.dart';
 import 'package:test_base_flutter/ui/theme/app_theme.dart';
 
@@ -23,7 +23,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LocalRepositoryProvider(
+    return RemoteRepositoryProvider(
       child: MaterialApp.router(
         routerConfig: createAppRouter(initialRoute),
         title: 'TestBase',

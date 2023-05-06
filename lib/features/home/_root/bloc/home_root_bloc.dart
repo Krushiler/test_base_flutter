@@ -11,21 +11,6 @@ class HomeRootBloc extends Bloc<HomeRootEvent, HomeRootState> {
     this.dictionaryRepository,
   ) : super(ProgressHomeRootState(true)) {
     on<LoadHomeRootEvent>((event, emit) async {
-      emit.call(ProgressHomeRootState(true));
-      final tagsResult = await dictionaryRepository.getTags();
-      final selectedTagValue = await SettingsStore.instance.dictionaryTag;
-      emit.call(
-        tagsResult.fold(
-          (l) => FailureHomeRootState(l.message),
-          (r) {
-            final selectedTag = r.firstWhere(
-              (element) => element.value == selectedTagValue,
-            );
-            return LoadedHomeRootState(r, selectedTag);
-          },
-        ),
-      );
-      emit.call(EnabledTagEditHomeRootState(true));
       emit.call(ProgressHomeRootState(false));
     });
 
