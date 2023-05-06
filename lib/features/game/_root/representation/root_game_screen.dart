@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_base_flutter/data/model/dictionary/term.dart';
+import 'package:test_base_flutter/data/model/game/game_type.dart';
 import 'package:test_base_flutter/data/model/game/question.dart';
+import 'package:test_base_flutter/data/model/game/question_term.dart';
 import 'package:test_base_flutter/features/game/_root/bloc/root_game_bloc.dart';
 import 'package:test_base_flutter/features/game/_root/bloc/root_game_event.dart';
 import 'package:test_base_flutter/features/game/_root/bloc/root_game_state.dart';
@@ -13,10 +14,12 @@ import 'package:test_base_flutter/ui/components/screen.dart';
 class RootGameScreenProvider extends StatelessWidget {
   final int questionsCount;
   final int dictionaryId;
+  final GameType gameType;
 
   const RootGameScreenProvider({
     required this.questionsCount,
     required this.dictionaryId,
+    required this.gameType,
     Key? key,
   }) : super(key: key);
 
@@ -25,9 +28,9 @@ class RootGameScreenProvider extends StatelessWidget {
     return BlocProvider<RootGameBloc>(
       create: (context) => RootGameBloc(context.read(), context.read())
         ..add(StartRootGameEvent(
-          questionsCount: questionsCount,
-          dictionaryId: dictionaryId,
-        )),
+            questionsCount: questionsCount,
+            dictionaryId: dictionaryId,
+            gameType: gameType)),
       child: const RootGameScreen(),
     );
   }
@@ -41,7 +44,7 @@ class RootGameScreen extends StatefulWidget {
 }
 
 class _RootGameScreenState extends State<RootGameScreen> {
-  final List<Term> mistakenTerms = [];
+  final List<QuestionTerm> mistakenTerms = [];
   late Question question;
   bool inProgress = true;
   bool isGameEnded = false;

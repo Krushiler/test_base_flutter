@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:test_base_flutter/data/model/_exception/user_exception.dart';
-import 'package:test_base_flutter/data/model/dictionary/term.dart';
+import 'package:test_base_flutter/data/model/terms/term.dart';
 import 'package:test_base_flutter/data/model/game/game_state.dart';
+import 'package:test_base_flutter/data/model/game/game_type.dart';
 import 'package:test_base_flutter/data/model/game/question.dart';
+import 'package:test_base_flutter/data/model/game/question_term.dart';
 import 'package:test_base_flutter/repository/interfaces/dictonary_repository.dart';
 
 class PracticeGameLogic {
@@ -21,15 +23,17 @@ class PracticeGameLogic {
   late int _questionsCount;
   late int _dictionaryId;
   late DictionaryRepository _dictionaryRepository;
+  late GameType _gameType;
 
-  setup({
-    required questionsCount,
-    required dictionaryId,
-    required dictionaryRepository,
-  }) {
+  setup(
+      {required int questionsCount,
+      required int dictionaryId,
+      required DictionaryRepository dictionaryRepository,
+      required GameType gameType}) {
     _questionsCount = questionsCount;
     _dictionaryId = dictionaryId;
     _dictionaryRepository = dictionaryRepository;
+    _gameType = gameType;
   }
 
   final List<Question> _questions = [];
@@ -82,7 +86,12 @@ class PracticeGameLogic {
       names.add(_getRandomTerm(terms, names));
       names.add(_getRandomTerm(terms, names));
       names.shuffle();
-      questions.add(Question(names, element));
+      questions.add(
+        Question(
+          names.map((e) => toQuestionTerm(e)).toList(),
+          toQuestionTerm(element),
+        ),
+      );
     }
     questions.shuffle();
     return questions;
@@ -105,8 +114,8 @@ class PracticeGameLogic {
     _startCountDownTimer();
   }
 
-  void giveAnswer(Term term) {
-    if (term == _questions[_currentQuestion].rightTerm) {
+  void giveAnswer(QuestionTerm term) {
+    if (term.termId == _questions[_currentQuestion].rightTerm.termId) {
       _currentQuestion++;
       if (_currentQuestion < _questionsCount - 1) {
         _emitQuestion();
@@ -122,6 +131,22 @@ class PracticeGameLogic {
     } else {
       _userMistakes++;
       _stateStreamController.add(MistakeGameState(term));
+    }
+  }
+
+  QuestionTerm toQuestionTerm(Term term) {
+    if (_gameType == GameType.translation) {
+      return QuestionTerm(
+        termId: term.id,
+        name: term.name,
+        answer: term.translation,
+      );
+    } else {
+      return QuestionTerm(
+        termId: term.id,
+        name: term.name,
+        answer: term.description,
+      );
     }
   }
 }

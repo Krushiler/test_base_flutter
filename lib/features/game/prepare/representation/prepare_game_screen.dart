@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test_base_flutter/data/model/dictionary/dictionary.dart';
+import 'package:test_base_flutter/data/model/game/game_type.dart';
 import 'package:test_base_flutter/features/game/prepare/bloc/prepare_game_bloc.dart';
 import 'package:test_base_flutter/features/game/prepare/bloc/prepare_game_event.dart';
 import 'package:test_base_flutter/features/game/prepare/bloc/prepare_game_state.dart';
@@ -37,7 +38,16 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
   bool inProgress = true;
   List<Dictionary> dictionaries = [];
   Dictionary? selectedDictionary;
+  final gameTypes = GameType.values;
+  late GameType selectedGameType;
+
   final countController = TextEditingController(text: 10.toString());
+
+  @override
+  void initState() {
+    super.initState();
+    selectedGameType = gameTypes.first;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,14 +73,15 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
             children: [
               const Spacer(),
               Text(
-                'Dictionary:',
+                'Dictionary',
                 style: Theme.of(context).textTheme.h3?.bold,
               ),
               Gap.md,
               if (selectedDictionary != null)
                 OutlinedButton(
                   onPressed: () async {
-                    final result = await context.pushNamed(HomeRoute.dictionarySelect);
+                    final result =
+                        await context.pushNamed(HomeRoute.dictionarySelect);
                     if (result != null && result is Dictionary) {
                       setState(() {
                         selectedDictionary = result;
@@ -81,7 +92,7 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
                 ),
               Gap.xxl,
               Text(
-                'Questions count:',
+                'Questions count',
                 style: Theme.of(context).textTheme.h3?.bold,
               ),
               Gap.md,
@@ -95,6 +106,30 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
                     setState(() {});
                   },
                 ),
+              ),
+              Gap.xxl,
+              Text(
+                'Game type',
+                style: Theme.of(context).textTheme.h3?.bold,
+              ),
+              Gap.md,
+              DropdownButton<GameType>(
+                value: selectedGameType,
+                items: gameTypes
+                    .map(
+                      (e) => DropdownMenuItem<GameType>(
+                        value: e,
+                        child: Text(e.name),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (type) {
+                  setState(() {
+                    if (type != null) {
+                      selectedGameType = type;
+                    }
+                  });
+                },
               ),
               const Spacer(),
               SizedBox(
@@ -112,6 +147,7 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
                               HomeParams.questionsCount: countController.text,
                               HomeParams.dictionaryId:
                                   selectedDictionary!.id.toString(),
+                              HomeParams.gameType: selectedGameType.name
                             },
                           );
                         }

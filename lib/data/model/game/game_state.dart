@@ -1,5 +1,5 @@
-import 'package:test_base_flutter/data/model/dictionary/term.dart';
 import 'package:test_base_flutter/data/model/game/question.dart';
+import 'package:test_base_flutter/data/model/game/question_term.dart';
 
 abstract class GameState {}
 
@@ -16,7 +16,7 @@ class NewQuestionGameState extends GameState {
 }
 
 class MistakeGameState extends GameState {
-  Term mistakenTerm;
+  QuestionTerm mistakenTerm;
 
   MistakeGameState(this.mistakenTerm);
 }

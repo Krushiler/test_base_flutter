@@ -41,6 +41,7 @@ class RootGameBloc extends Bloc<RootGameEvent, RootGameState> {
         questionsCount: event.questionsCount,
         dictionaryId: event.dictionaryId,
         dictionaryRepository: dictionaryRepository,
+        gameType: event.gameType
       );
     });
     on<AnswerQuestionRootGameEvent>((event, emit) {

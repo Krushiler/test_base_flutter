@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:test_base_flutter/data/model/dictionary/term.dart';
+import 'package:test_base_flutter/data/model/terms/term.dart';
 import 'package:test_base_flutter/features/home/dictionary/terms/representation/components/term_list_item.dart';
 import 'package:test_base_flutter/ui/dimens.dart';
 import 'package:test_base_flutter/ui/theme/app_colors.dart';

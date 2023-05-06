@@ -1,4 +1,4 @@
-import 'package:test_base_flutter/data/model/dictionary/term.dart';
+import 'package:test_base_flutter/data/model/terms/term.dart';
 
 abstract class TermsState {}
 

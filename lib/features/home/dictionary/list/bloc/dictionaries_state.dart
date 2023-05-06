@@ -1,4 +1,4 @@
-import 'package:test_base_flutter/data/dto/dictionary/dictionary_list_dto.dart';
+import 'package:test_base_flutter/data/model/dictionary/dictionary_list_result.dart';
 
 abstract class DictionariesState {}
 
@@ -9,7 +9,7 @@ class ProgressDictionariesState extends DictionariesState {
 }
 
 class LoadedDictionariesState extends DictionariesState {
-  final DictionaryListDto dictionaryList;
+  final DictionaryListResult dictionaryList;
   final bool refresh;
 
   LoadedDictionariesState(this.dictionaryList, this.refresh);

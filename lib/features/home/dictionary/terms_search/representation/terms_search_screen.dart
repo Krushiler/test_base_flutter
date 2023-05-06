@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:test_base_flutter/data/model/dictionary/term.dart';
+import 'package:test_base_flutter/data/model/terms/term.dart';
 import 'package:test_base_flutter/features/home/dictionary/terms/representation/components/term_list.dart';
 import 'package:test_base_flutter/features/home/dictionary/terms_search/bloc/terms_seach_bloc.dart';
 import 'package:test_base_flutter/features/home/dictionary/terms_search/bloc/terms_search_event.dart';

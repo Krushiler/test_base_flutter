@@ -1,7 +1,7 @@
 import 'package:test_base_flutter/data/model/dictionary/dictionary.dart';
 
-class DictionaryListDto {
+class DictionaryListResult {
   final List<Dictionary> dictionaries;
 
-  DictionaryListDto(this.dictionaries);
+  DictionaryListResult(this.dictionaries);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:test_base_flutter/data/model/game/game_type.dart';
 import 'package:test_base_flutter/features/game/_root/representation/root_game_screen.dart';
 import 'package:test_base_flutter/features/game/dictionary_select/representation/dictionary_select_screen.dart';
 import 'package:test_base_flutter/features/game/prepare/representation/prepare_game_screen.dart';
@@ -27,6 +28,7 @@ class HomeRoute {
 class HomeParams {
   static const dictionaryId = 'dictionaryId';
   static const questionsCount = 'questionsCount';
+  static const gameType = 'gameType';
 }
 
 final homeRoutes = [
@@ -85,6 +87,7 @@ final homeRoutes = [
       child: RootGameScreenProvider(
         questionsCount: state.getIntQueryParam(HomeParams.questionsCount) ?? 0,
         dictionaryId: state.getIntQueryParam(HomeParams.dictionaryId) ?? 0,
+        gameType: state.queryParams[HomeParams.gameType]?.gameType ?? GameType.translation,
       ),
     ),
   ),

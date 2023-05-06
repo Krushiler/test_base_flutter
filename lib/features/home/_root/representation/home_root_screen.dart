@@ -5,7 +5,6 @@ import 'package:test_base_flutter/data/model/dictionary/tag.dart';
 import 'package:test_base_flutter/features/home/_root/bloc/home_root_bloc.dart';
 import 'package:test_base_flutter/features/home/_root/bloc/home_root_event.dart';
 import 'package:test_base_flutter/features/home/_root/bloc/home_root_state.dart';
-import 'package:test_base_flutter/features/home/_root/representation/components/tag_switcher.dart';
 import 'package:test_base_flutter/features/home/home_routing.dart';
 import 'package:test_base_flutter/ui/components/screen.dart';
 import 'package:test_base_flutter/ui/kit/icons.dart';
@@ -83,22 +82,8 @@ class _HomeRootScreenState extends State<HomeRootScreen> {
           }
         });
       },
-      appBar: TestBaseAppBar(
-        title: const Text('TestBase'),
-        actions: [
-          if (selectedTag != null)
-            TagSwitcher(
-              value: selectedTag!,
-              onTagSwitched: (tag) {
-                BlocProvider.of<HomeRootBloc>(context).add(
-                  SelectTagHomeRootEvent(
-                    tag,
-                  ),
-                );
-              },
-              values: tags,
-            )
-        ],
+      appBar: const TestBaseAppBar(
+        title: Text('TestBase'),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _getPageIndex,

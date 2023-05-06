@@ -2,19 +2,19 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
-import 'package:test_base_flutter/data/dto/dictionary/dictionary_list_dto.dart';
-import 'package:test_base_flutter/data/dto/dictionary/terms_dto.dart';
-import 'package:test_base_flutter/data/dto/dictionary/terms_search_dto.dart';
-import 'package:test_base_flutter/data/dto/json.dart';
+import 'package:test_base_flutter/data/model/dictionary/dictionary_list_result.dart';
+import 'package:test_base_flutter/data/model/terms/term_list_result.dart';
+import 'package:test_base_flutter/data/model/terms/terms_search_result.dart';
+import 'package:test_base_flutter/data/dto/_base/json.dart';
 import 'package:test_base_flutter/data/model/_exception/user_exception.dart';
 import 'package:test_base_flutter/data/model/dictionary/dictionary.dart';
 import 'package:test_base_flutter/data/model/dictionary/tag.dart';
-import 'package:test_base_flutter/data/model/dictionary/term.dart';
+import 'package:test_base_flutter/data/model/terms/term.dart';
 import 'package:test_base_flutter/repository/interfaces/dictonary_repository.dart';
 
 class LocalDictionaryRepository implements DictionaryRepository {
   @override
-  Future<Either<UserException, DictionaryListDto>> getDictionaries(
+  Future<Either<UserException, DictionaryListResult>> getDictionaries(
       String tag) async {
     final List<_DictionaryInfo> dicts;
     try {
@@ -23,19 +23,13 @@ class LocalDictionaryRepository implements DictionaryRepository {
       return Left(UserException('Unable to get available dictionaries'));
     }
     final list = dicts
-        .map((e) => Dictionary(
-              id: e.id,
-              name: e.name,
-              tag: e.tag,
-              termsCount: 30
-            ))
-        .where((element) => element.tag == tag)
+        .map((e) => Dictionary(id: e.id, name: e.name, termsCount: 30))
         .toList();
-    return Right(DictionaryListDto(list));
+    return Right(DictionaryListResult(list));
   }
 
   @override
-  Future<Either<UserException, TermsDto>> getTerms(int dictionaryId) async {
+  Future<Either<UserException, TermListResult>> getTerms(int dictionaryId) async {
     final List<_DictionaryInfo> dicts;
     try {
       dicts = await _getAvailableDictionaries();
@@ -56,14 +50,16 @@ class LocalDictionaryRepository implements DictionaryRepository {
     for (int i = 0; i < termsJson.length; i += 2) {
       terms.add(
         Term(
+          id: i,
           name: termsJson[i],
+          translation: "${termsJson[i + 1]}_t",
           description: termsJson[i + 1],
         ),
       );
     }
 
     return Right(
-      TermsDto(
+      TermListResult(
         neededDict.name,
         terms,
       ),
@@ -71,7 +67,7 @@ class LocalDictionaryRepository implements DictionaryRepository {
   }
 
   @override
-  Future<Either<UserException, TermsSearchDto>> searchTerms(
+  Future<Either<UserException, TermsSearchResult>> searchTerms(
       int dictionaryId, String query) async {
     final termsResult = await getTerms(dictionaryId);
     final List<Term> terms = [];
@@ -107,7 +103,7 @@ class LocalDictionaryRepository implements DictionaryRepository {
             terms.add(element);
           }
         }
-        return Right(TermsSearchDto(terms));
+        return Right(TermsSearchResult(terms));
       },
     );
   }

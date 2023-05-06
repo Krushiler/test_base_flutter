@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:test_base_flutter/data/model/dictionary/term.dart';
 import 'package:test_base_flutter/data/model/game/question.dart';
+import 'package:test_base_flutter/data/model/game/question_term.dart';
 import 'package:test_base_flutter/ui/dimens.dart';
 import 'package:test_base_flutter/ui/kit/gap.dart';
 
 class QuestionPage extends StatelessWidget {
   final Question question;
-  final List<Term> mistakenTerms;
-  final void Function(Term) onTermClicked;
+  final List<QuestionTerm> mistakenTerms;
+  final void Function(QuestionTerm) onTermClicked;
 
   const QuestionPage({
     Key? key,
@@ -38,7 +38,7 @@ class QuestionPage extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      question.rightTerm.description,
+                      question.rightTerm.answer,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                   ),
@@ -71,7 +71,7 @@ class QuestionPage extends StatelessWidget {
     );
   }
 
-  bool _isMistaken(Term term) {
+  bool _isMistaken(QuestionTerm term) {
     return mistakenTerms.contains(term);
   }
 }
