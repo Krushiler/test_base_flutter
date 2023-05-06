@@ -9,7 +9,7 @@ import 'package:test_base_flutter/data/model/_exception/server_exception.dart';
 
 abstract class RemoteRepository {
   static const token = 'pizdec';
-  static const baseUrl = 'http://192.168.0.1:8080/api';
+  static const baseUrl = 'http://62.84.121.82:8080/api';
   static const defaultTimeout = Duration(seconds: 10);
 
   Future<Either<ServerException, Map<String, dynamic>>> executePost(
@@ -36,6 +36,10 @@ abstract class RemoteRepository {
       return Left(ServerException('Server is unavailable'));
     } on SocketException catch (_) {
       return Left(ServerException('Something went wrong'));
+    } on FormatException catch (_) {
+      return Left(ServerException('Internal server error'));
+    } on HandshakeException catch(_) {
+      return Left(ServerException('Wrong server ip/port'));
     }
   }
 
@@ -61,6 +65,10 @@ abstract class RemoteRepository {
       return Left(ServerException('Server is unavailable'));
     } on SocketException catch (_) {
       return Left(ServerException('Something went wrong'));
+    } on FormatException catch (_) {
+      return Left(ServerException('Internal server error'));
+    } on HandshakeException catch(_) {
+      return Left(ServerException('Wrong server ip/port'));
     }
   }
 }
