@@ -7,7 +7,6 @@ import 'package:test_base_flutter/features/game/dictionary_select/bloc/dictionar
 import 'package:test_base_flutter/features/game/dictionary_select/bloc/dictionary_select_event.dart';
 import 'package:test_base_flutter/features/game/dictionary_select/bloc/dictionary_select_state.dart';
 import 'package:test_base_flutter/features/home/dictionary/list/representation/components/dictionary_list.dart';
-import 'package:test_base_flutter/features/home/home_routing.dart';
 import 'package:test_base_flutter/ui/components/screen.dart';
 import 'package:test_base_flutter/util/snackbar_util.dart';
 

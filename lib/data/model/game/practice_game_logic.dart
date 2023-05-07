@@ -106,8 +106,13 @@ class PracticeGameLogic {
   }
 
   _emitQuestion() {
-    _stateStreamController
-        .add(NewQuestionGameState(_questions[_currentQuestion]));
+    _stateStreamController.add(
+      NewQuestionGameState(
+        _questions[_currentQuestion],
+        questionCount: _questionsCount,
+        currentQuestion: _currentQuestion,
+      ),
+    );
   }
 
   void startGame() {

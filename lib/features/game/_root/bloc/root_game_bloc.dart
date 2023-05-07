@@ -24,7 +24,11 @@ class RootGameBloc extends Bloc<RootGameEvent, RootGameState> {
         emit.call(CountDownRootGameState(gameState.number));
       }
       if (gameState is NewQuestionGameState) {
-        emit.call(NewQuestionRootGameState(gameState.question));
+        emit.call(NewQuestionRootGameState(
+          gameState.question,
+          currentQuestion: gameState.currentQuestion,
+          questionCount: gameState.questionCount,
+        ));
       }
       if (gameState is MistakeGameState) {
         emit.call(MistakeRootGameState(gameState.mistakenTerm));
@@ -38,11 +42,10 @@ class RootGameBloc extends Bloc<RootGameEvent, RootGameState> {
     });
     on<StartRootGameEvent>((event, emit) {
       gameRepository.startGame(
-        questionsCount: event.questionsCount,
-        dictionaryId: event.dictionaryId,
-        dictionaryRepository: dictionaryRepository,
-        gameType: event.gameType
-      );
+          questionsCount: event.questionsCount,
+          dictionaryId: event.dictionaryId,
+          dictionaryRepository: dictionaryRepository,
+          gameType: event.gameType);
     });
     on<AnswerQuestionRootGameEvent>((event, emit) {
       gameRepository.giveAnswer(event.term);

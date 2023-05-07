@@ -17,8 +17,14 @@ class CountDownRootGameState extends RootGameState {
 
 class NewQuestionRootGameState extends RootGameState {
   final Question question;
+  int currentQuestion;
+  int questionCount;
 
-  NewQuestionRootGameState(this.question);
+  NewQuestionRootGameState(
+    this.question, {
+    required this.currentQuestion,
+    required this.questionCount,
+  });
 }
 
 class MistakeRootGameState extends RootGameState {

@@ -33,24 +33,25 @@ class _DictionaryListState extends State<DictionaryList> {
         color: Theme.of(context).colorScheme.secondary,
       ),
       child: ListView.separated(
-          physics: RefreshPhysics(controller: widget.refreshController),
-          padding: const EdgeInsets.symmetric(vertical: Dimens.md),
-          itemBuilder: (context, index) => DictionaryListItem(
-                name: widget.dictionaries[index].name,
-                onPressed: () {
-                  widget.onDictionaryPressed?.call(
-                    widget.dictionaries[index],
-                  );
-                },
-              ),
-          separatorBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.only(left: Dimens.md),
-                child: Divider(
-                  height: 1,
-                  color: AppColors.gray.shade200,
-                ),
-              ),
-          itemCount: widget.dictionaries.length),
+        physics: RefreshPhysics(controller: widget.refreshController),
+        padding: const EdgeInsets.symmetric(vertical: Dimens.md),
+        itemBuilder: (context, index) => DictionaryListItem(
+          name: widget.dictionaries[index].name,
+          onPressed: () {
+            widget.onDictionaryPressed?.call(
+              widget.dictionaries[index],
+            );
+          },
+        ),
+        separatorBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.only(left: Dimens.md),
+          child: Divider(
+            height: 1,
+            color: AppColors.gray.shade200,
+          ),
+        ),
+        itemCount: widget.dictionaries.length,
+      ),
     );
   }
 }

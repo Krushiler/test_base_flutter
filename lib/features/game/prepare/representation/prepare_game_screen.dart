@@ -67,96 +67,98 @@ class _PrepareGameScreenState extends State<PrepareGameScreen> {
         });
       },
       builder: (context, state) {
-        return Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Spacer(),
-              Text(
-                'Dictionary',
-                style: Theme.of(context).textTheme.h3?.bold,
-              ),
-              Gap.md,
-              if (selectedDictionary != null)
-                OutlinedButton(
-                  onPressed: () async {
-                    final result =
-                        await context.pushNamed(HomeRoute.dictionarySelect);
-                    if (result != null && result is Dictionary) {
-                      setState(() {
-                        selectedDictionary = result;
-                      });
-                    }
+        return SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Gap.xxl,
+                Text(
+                  'Dictionary',
+                  style: Theme.of(context).textTheme.h3?.bold,
+                ),
+                Gap.md,
+                if (selectedDictionary != null)
+                  OutlinedButton(
+                    onPressed: () async {
+                      final result =
+                          await context.pushNamed(HomeRoute.dictionarySelect);
+                      if (result != null && result is Dictionary) {
+                        setState(() {
+                          selectedDictionary = result;
+                        });
+                      }
+                    },
+                    child: Text(selectedDictionary!.name),
+                  ),
+                Gap.xxl,
+                Text(
+                  'Questions count',
+                  style: Theme.of(context).textTheme.h3?.bold,
+                ),
+                Gap.md,
+                SizedBox(
+                  width: 120,
+                  child: TextFormField(
+                    controller: countController,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    onChanged: (_) {
+                      setState(() {});
+                    },
+                  ),
+                ),
+                Gap.xxl,
+                Text(
+                  'Game type',
+                  style: Theme.of(context).textTheme.h3?.bold,
+                ),
+                Gap.md,
+                DropdownButton<GameType>(
+                  value: selectedGameType,
+                  items: gameTypes
+                      .map(
+                        (e) => DropdownMenuItem<GameType>(
+                          value: e,
+                          child: Text(e.name),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (type) {
+                    setState(() {
+                      if (type != null) {
+                        selectedGameType = type;
+                      }
+                    });
                   },
-                  child: Text(selectedDictionary!.name),
                 ),
-              Gap.xxl,
-              Text(
-                'Questions count',
-                style: Theme.of(context).textTheme.h3?.bold,
-              ),
-              Gap.md,
-              SizedBox(
-                width: 120,
-                child: TextFormField(
-                  controller: countController,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                  onChanged: (_) {
-                    setState(() {});
-                  },
+                Gap.xxl,
+                SizedBox(
+                  width: 240,
+                  child: ElevatedButton(
+                    onPressed: selectedDictionary != null &&
+                            int.tryParse(countController.text) != null &&
+                            int.parse(countController.text) <=
+                                selectedDictionary!.termsCount &&
+                            int.parse(countController.text) > 0
+                        ? () {
+                            context.pushNamed(
+                              HomeRoute.practiceGame,
+                              queryParams: {
+                                HomeParams.questionsCount: countController.text,
+                                HomeParams.dictionaryId:
+                                    selectedDictionary!.id.toString(),
+                                HomeParams.gameType: selectedGameType.name
+                              },
+                            );
+                          }
+                        : null,
+                    child: const Text('Start'),
+                  ),
                 ),
-              ),
-              Gap.xxl,
-              Text(
-                'Game type',
-                style: Theme.of(context).textTheme.h3?.bold,
-              ),
-              Gap.md,
-              DropdownButton<GameType>(
-                value: selectedGameType,
-                items: gameTypes
-                    .map(
-                      (e) => DropdownMenuItem<GameType>(
-                        value: e,
-                        child: Text(e.name),
-                      ),
-                    )
-                    .toList(),
-                onChanged: (type) {
-                  setState(() {
-                    if (type != null) {
-                      selectedGameType = type;
-                    }
-                  });
-                },
-              ),
-              const Spacer(),
-              SizedBox(
-                width: 240,
-                child: ElevatedButton(
-                  onPressed: selectedDictionary != null &&
-                          int.tryParse(countController.text) != null &&
-                          int.parse(countController.text) <=
-                              selectedDictionary!.termsCount &&
-                          int.parse(countController.text) > 0
-                      ? () {
-                          context.pushNamed(
-                            HomeRoute.practiceGame,
-                            queryParams: {
-                              HomeParams.questionsCount: countController.text,
-                              HomeParams.dictionaryId:
-                                  selectedDictionary!.id.toString(),
-                              HomeParams.gameType: selectedGameType.name
-                            },
-                          );
-                        }
-                      : null,
-                  child: const Text('Start'),
-                ),
-              ),
-              const Spacer(),
-            ],
+                Gap.xxl,
+              ],
+            ),
           ),
         );
       },

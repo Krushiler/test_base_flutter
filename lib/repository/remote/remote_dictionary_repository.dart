@@ -12,6 +12,8 @@ import 'package:test_base_flutter/repository/remote/remote_repository.dart';
 
 class RemoteDictionaryRepository extends RemoteRepository
     implements DictionaryRepository {
+  final List<Term> _cachedWords = [];
+
   @override
   Future<Either<UserException, DictionaryListResult>> getDictionaries(
       String tag) async {
@@ -32,51 +34,52 @@ class RemoteDictionaryRepository extends RemoteRepository
   @override
   Future<Either<UserException, TermListResult>> getTerms(
       int dictionaryId) async {
+    _cachedWords.clear();
     final json =
         await executeGet('Set/${RemoteRepository.token}/$dictionaryId');
 
     return json.fold(
       (l) => Left(l),
-      (r) => Right(
-        TermListResponse.fromJson(r).model,
-      ),
+      (r) {
+        final model = TermListResponse.fromJson(r).model;
+        _cachedWords.addAll(model.terms);
+        return Right(
+          model,
+        );
+      },
     );
   }
 
   @override
   Future<Either<UserException, TermsSearchResult>> searchTerms(
       int dictionaryId, String query) async {
-    final termsResult = await getTerms(dictionaryId);
-
-    return termsResult.fold((l) => Left(l), (r) async {
-      final List<Term> terms = [];
-      for (final element in r.terms) {
-        if (element.name
-            .trim()
-            .toLowerCase()
-            .startsWith(query.trim().toLowerCase())) {
-          terms.add(element);
-        }
+    final List<Term> terms = [];
+    for (final element in _cachedWords) {
+      if (element.name
+          .trim()
+          .toLowerCase()
+          .startsWith(query.trim().toLowerCase())) {
+        terms.add(element);
       }
-      for (final element in r.terms) {
-        if (element.name
-            .trim()
-            .toLowerCase()
-            .contains(query.trim().toLowerCase()) &&
-            !terms.contains(element)) {
-          terms.add(element);
-        }
+    }
+    for (final element in _cachedWords) {
+      if (element.translation
+              .trim()
+              .toLowerCase()
+              .contains(query.trim().toLowerCase()) &&
+          !terms.contains(element)) {
+        terms.add(element);
       }
-      for (final element in r.terms) {
-        if (element.description
-            .trim()
-            .toLowerCase()
-            .contains(query.trim().toLowerCase()) &&
-            !terms.contains(element)) {
-          terms.add(element);
-        }
+    }
+    for (final element in _cachedWords) {
+      if (element.description
+              .trim()
+              .toLowerCase()
+              .contains(query.trim().toLowerCase()) &&
+          !terms.contains(element)) {
+        terms.add(element);
       }
-      return Right(TermsSearchResult(terms));
-    });
+    }
+    return Right(TermsSearchResult(terms));
   }
 }

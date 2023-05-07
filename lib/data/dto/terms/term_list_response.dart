@@ -21,7 +21,7 @@ class TermListResponse {
         words.map((e) => e.model).toList(),
       );
 
-  factory TermListResponse.fromJson(Json json) => _$TermListResponseFromJson(json);
+  factory TermListResponse.fromJson(Json json) => _$TermListResponseFromJson(json['data']);
 
   Json toJson() => _$TermListResponseToJson(this);
 }

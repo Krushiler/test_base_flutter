@@ -3,17 +3,22 @@ import 'package:test_base_flutter/data/model/game/question.dart';
 import 'package:test_base_flutter/data/model/game/question_term.dart';
 import 'package:test_base_flutter/ui/dimens.dart';
 import 'package:test_base_flutter/ui/kit/gap.dart';
+import 'package:test_base_flutter/ui/theme/app_colors.dart';
 
 class QuestionPage extends StatelessWidget {
   final Question question;
   final List<QuestionTerm> mistakenTerms;
   final void Function(QuestionTerm) onTermClicked;
+  final int currentQuestion;
+  final int questionCount;
 
   const QuestionPage({
     Key? key,
     required this.mistakenTerms,
     required this.onTermClicked,
     required this.question,
+    required this.currentQuestion,
+    required this.questionCount,
   }) : super(key: key);
 
   @override
@@ -23,6 +28,23 @@ class QuestionPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: Dimens.xxl),
       child: Column(
         children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(Dimens.sm),
+            child: TweenAnimationBuilder(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+              tween: Tween<double>(
+                begin: 0,
+                end: (currentQuestion + 1) / (questionCount - 1),
+              ),
+              builder: (context, value, _) => LinearProgressIndicator(
+                value: value,
+                minHeight: Dimens.md,
+                backgroundColor: AppColors.gray.shade200,
+              ),
+            ),
+          ),
+          Gap.md,
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

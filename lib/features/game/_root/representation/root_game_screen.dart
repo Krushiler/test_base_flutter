@@ -48,6 +48,8 @@ class _RootGameScreenState extends State<RootGameScreen> {
   late Question question;
   bool inProgress = true;
   bool isGameEnded = false;
+  int currentQuestion = 1;
+  int questionCount = 1;
 
   Widget widgetToShow = const Center(
     child: CircularProgressIndicator(),
@@ -70,6 +72,8 @@ class _RootGameScreenState extends State<RootGameScreen> {
           if (state is NewQuestionRootGameState) {
             mistakenTerms.clear();
             question = state.question;
+            questionCount = state.questionCount;
+            currentQuestion = state.currentQuestion;
           }
           if (state is MistakeRootGameState) {
             mistakenTerms.add(state.term);
@@ -77,13 +81,16 @@ class _RootGameScreenState extends State<RootGameScreen> {
           if (state is NewQuestionRootGameState ||
               state is MistakeRootGameState) {
             widgetToShow = QuestionPage(
-                mistakenTerms: mistakenTerms,
-                onTermClicked: (term) {
-                  BlocProvider.of<RootGameBloc>(context).add(
-                    AnswerQuestionRootGameEvent(term),
-                  );
-                },
-                question: question);
+              mistakenTerms: mistakenTerms,
+              onTermClicked: (term) {
+                BlocProvider.of<RootGameBloc>(context).add(
+                  AnswerQuestionRootGameEvent(term),
+                );
+              },
+              question: question,
+              currentQuestion: currentQuestion,
+              questionCount: questionCount,
+            );
           }
           if (state is EndedRootGameState) {
             widgetToShow = ResultPage(
