@@ -15,7 +15,7 @@ class RemoteDictionaryRepository extends RemoteRepository
   @override
   Future<Either<UserException, DictionaryListResult>> getDictionaries(
       String tag) async {
-    final json = await executeGet('api/Set/${RemoteRepository.token}');
+    final json = await executeGet('Set/${RemoteRepository.token}');
     return json.fold(
       (l) => Left(l),
       (r) => Right(
@@ -33,7 +33,7 @@ class RemoteDictionaryRepository extends RemoteRepository
   Future<Either<UserException, TermListResult>> getTerms(
       int dictionaryId) async {
     final json =
-        await executeGet('api/Set/${RemoteRepository.token}/$dictionaryId');
+        await executeGet('Set/${RemoteRepository.token}/$dictionaryId');
 
     return json.fold(
       (l) => Left(l),

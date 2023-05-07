@@ -37,6 +37,7 @@ class _TermListState extends State<TermList> {
           padding: const EdgeInsets.symmetric(vertical: Dimens.md),
           itemBuilder: (context, index) => TermListItem(
                 name: widget.terms[index].name,
+                translation: widget.terms[index].translation,
                 description: widget.terms[index].description,
                 onPressed: () {
                   widget.onTermPressed?.call(

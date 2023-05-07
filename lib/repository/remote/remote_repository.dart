@@ -8,7 +8,7 @@ import 'package:test_base_flutter/data/dto/_base/response_dto.dart';
 import 'package:test_base_flutter/data/model/_exception/server_exception.dart';
 
 abstract class RemoteRepository {
-  static const token = 'pizdec';
+  static const token = '9mYfLCoyL9RjD6pop6Ov';
   static const baseUrl = 'http://62.84.121.82:8080/api';
   static const defaultTimeout = Duration(seconds: 10);
 
@@ -38,7 +38,7 @@ abstract class RemoteRepository {
       return Left(ServerException('Something went wrong'));
     } on FormatException catch (_) {
       return Left(ServerException('Internal server error'));
-    } on HandshakeException catch(_) {
+    } on HandshakeException catch (_) {
       return Left(ServerException('Wrong server ip/port'));
     }
   }
@@ -67,7 +67,7 @@ abstract class RemoteRepository {
       return Left(ServerException('Something went wrong'));
     } on FormatException catch (_) {
       return Left(ServerException('Internal server error'));
-    } on HandshakeException catch(_) {
+    } on HandshakeException catch (_) {
       return Left(ServerException('Wrong server ip/port'));
     }
   }

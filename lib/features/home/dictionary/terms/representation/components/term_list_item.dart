@@ -5,13 +5,15 @@ import 'package:test_base_flutter/ui/theme/app_text_theme.dart';
 
 class TermListItem extends StatelessWidget {
   final String name;
+  final String translation;
   final String description;
   final VoidCallback? onPressed;
 
   const TermListItem({
     required this.name,
-    this.onPressed,
+    required this.translation,
     required this.description,
+    this.onPressed,
     Key? key,
   }) : super(key: key);
 
@@ -26,7 +28,7 @@ class TermListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              name,
+              '$name - $translation',
               style: Theme.of(context).textTheme.h3,
             ),
             Gap.sm,
